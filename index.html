@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+   
+</style>
+<body>
+    
+    <h1>Fetch</h1>
+
+    <button onclick="getData()">AppendData</button>
+
+    <div id="box">
+
+    </div>
+
+    
+</body>
+</html>
+
+<script>
+
+    async function getData(){
+        let res = await fetch("https://fakestoreapi.com/products");
+
+        console.log(res)
+        let data = await res.json()
+        console.log(data)
+
+        appendData(data);
+    }
+
+    function appendData(data){
+        var box = document.getElementById("box");
+        box.innerHTML="";
+        box.style.display = "flex"
+        box.style.flexWrap = "wrap"
+        
+       
+
+         data.forEach((data) => {
+
+            var container = document.createElement("div");
+            container.style.height ="440px"
+            container.style.width = "396px"
+            container.style.backgroundColor = "red"
+            container.style.border = "2px solid white"
+            container.style.display = "flex"
+            container.style.flexDirection = "column"
+            container.style.alignItems = "center"
+
+
+            let title = document.createElement("p");
+            title.innerText = `TITLE : ${data.title}`;
+
+            let id = document.createElement("p");
+            id.innerText = `ID- ${data.id}`;
+
+            let price = document.createElement("p");
+            price.innerText = `PRICE-  ${data.price}`;
+
+            let rating = document.createElement("p");
+            rating.innerText = `RATING-  ${data.rating.rate}  COUNT-  ${data.rating.count}`;
+
+            let image = document.createElement("img");
+            image.style.width = "200px";
+            image.style.height ="200px";
+            image.src = data.image;
+            
+            //let hr = document.createElement("hr");
+
+            container.append(title,id,price,rating,image);
+            box.appendChild(container);
+
+         });
+    }
+</script>
